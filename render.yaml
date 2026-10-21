@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: bp-warehouse
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    plan: starter
+    disk:
+      name: bp-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: OWNER_TELEGRAM_ID
+        sync: false
+      - key: WEBAPP_URL
+        sync: false
+      - key: DATA_DIR
+        value: /opt/render/project/src/data
+      - key: DEMO_MODE
+        value: "false"
